@@ -1,0 +1,14 @@
+C:\Users\Marcelo\repos\Chashtag\Lacuna\bin\Debug\net7.0\Lacuna.exe
+C:\Users\Marcelo\repos\Chashtag\Lacuna\bin\Debug\net7.0\Lacuna.deps.json
+C:\Users\Marcelo\repos\Chashtag\Lacuna\bin\Debug\net7.0\Lacuna.runtimeconfig.json
+C:\Users\Marcelo\repos\Chashtag\Lacuna\bin\Debug\net7.0\Lacuna.dll
+C:\Users\Marcelo\repos\Chashtag\Lacuna\bin\Debug\net7.0\Lacuna.pdb
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\Lacuna.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\Lacuna.AssemblyInfoInputs.cache
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\Lacuna.AssemblyInfo.cs
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\Lacuna.csproj.CoreCompileInputs.cache
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\Lacuna.dll
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\refint\Lacuna.dll
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\Lacuna.pdb
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\Lacuna.genruntimeconfig.cache
+C:\Users\Marcelo\repos\Chashtag\Lacuna\obj\Debug\net7.0\ref\Lacuna.dll
