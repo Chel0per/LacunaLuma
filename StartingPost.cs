@@ -1,35 +1,20 @@
 using System.Text;
+using System.Text.Json;
 
 namespace Lacuna
 {
 class StartingPost
 {
-    public string Username
-    {
-        get { return _username; }
-        set { _username = value; }
-    }
-    private string _username;
+    private string? _username;
+    private string? _email;
 
-    public string Email
-    {
-        get { return _email; }
-        set { _email = value; }
-    }
-    private string _email;
-
-    public StartingPost()
-    {
-        _username="Unknown";
-        _email="Unknown";
-    }
     public StartingPost(string username,string email)
     {
         _username=username;
         _email=email;
     }
 
-    public async Task GetAcessToken( )
+    public async Task<string> GetAcessToken( )
     {
         using HttpClient httpClient = new HttpClient();
         try
@@ -38,11 +23,22 @@ class StartingPost
             HttpContent content = new StringContent(requestBody, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await httpClient.PostAsync("https://luma.lacuna.cc/api/start", content);
             string responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine($"Response: {responseContent}");
+
+            var options = new JsonSerializerOptions{ PropertyNameCaseInsensitive = true };
+            Response? startingResponse = JsonSerializer.Deserialize<Response>(responseContent,options);
+                
+            if (startingResponse != null)
+            {
+                return startingResponse.AccessToken ?? "AccessToken is null";
+            }
+            else
+            {
+                return "Response could not be deserialized";
+            }
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
+            return ex.Message;
         }
     }
 }

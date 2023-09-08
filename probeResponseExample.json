@@ -1,0 +1,15 @@
+{
+    "probes":
+        [
+            {"id":"6fee70b1-291b-4f1e-87da-c5d555226d65","name":"Cassini","encoding":"Ticks"},
+            {"id":"deb029dc-da35-4019-8c8d-271333e80dde","name":"JUICE","encoding":"Ticks"},
+            {"id":"0ccbc172-9aa6-4b89-a818-744afb5fe31f","name":"Rosetta","encoding":"TicksBinary"},
+            {"id":"52893233-5a01-4a72-8179-c64fb901bc0f","name":"Phobos 2","encoding":"Ticks"},
+            {"id":"1c47091e-ffff-4bed-929b-c7e0e793c4a4","name":"Dragonfly","encoding":"TicksBinaryBigEndian"},
+            {"id":"6af8617e-f653-4fcc-9db6-1a24eeff35f7","name":"Pioneer-E","encoding":"Iso8601"},
+            {"id":"57baaffe-3775-4d29-a06e-f67726134cff","name":"BioSentinel","encoding":"Iso8601"},
+            {"id":"e03b63fa-a9b9-428f-bb90-21d43b0eacf6","name":"Tianwen-4","encoding":"TicksBinary"},
+            {"id":"0bbef7b0-0f03-4624-81af-0327709560d7","name":"Voyager 2","encoding":"TicksBinaryBigEndian"},
+            {"id":"dd1e6374-a762-47f8-ade4-6adecbdfa982","name":"Voyager 1","encoding":"TicksBinaryBigEndian"}],
+    "code":"Success"
+}
