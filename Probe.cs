@@ -8,34 +8,70 @@ class Probe
     public string? Name { get; set; }
     public string? Encoding { get; set; }
 
-    public async Task<Response> SyncProbe(string accessToken)
+    public async Task<SyncValues> SyncProbe(string accessToken)
     {
         using HttpClient httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
 
-        HttpResponseMessage response = await httpClient.PostAsync($"https://luma.lacuna.cc/api/probe/{Id}/sync",null);
-        string responseContent = await response.Content.ReadAsStringAsync();
+        long timeOffset = 0;
+        long newTimeOffset;
+        long roundTrip = 0;
+        long t0;
+        long t3;
 
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        Response? syncResponse = JsonSerializer.Deserialize<Response>(responseContent, options);
-        Decode(syncResponse);
+        do 
+        {
+            t0 = DateTime.UtcNow.Ticks + timeOffset;
+            HttpResponseMessage response = await httpClient.PostAsync($"https://luma.lacuna.cc/api/probe/{Id}/sync",null);
+            t3 = DateTime.UtcNow.Ticks + timeOffset;
+            string responseContent = await response.Content.ReadAsStringAsync();
 
-        return syncResponse;
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            Response? syncResponse = JsonSerializer.Deserialize<Response>(responseContent, options);
+            Decode(syncResponse);
+            long t1 = long.Parse(syncResponse.T1);
+            long t2 = long.Parse(syncResponse.T2);
+
+            newTimeOffset = (t1 - t0 + (t2 - t3))/2;  
+            timeOffset += newTimeOffset;
+            roundTrip = t3 - t0 - (t2 - t1); 
+
+            Console.WriteLine($"timeOffset:{newTimeOffset}");
+            Console.WriteLine($"roundTrip:{roundTrip}");
+        }
+        while(newTimeOffset >= 50000 || newTimeOffset <= -50000);
+
+        SyncValues syncValues = new SyncValues(t0.ToString(),roundTrip);
+
+        return syncValues;
     }
 
     private void Decode(Response syncResponse){
         switch(Encoding)
         {
             case "TicksBinary":
+                byte[] bytes = Convert.FromBase64String(syncResponse.T1);
+                syncResponse.T1 = BitConverter.ToInt64(bytes, 0).ToString();
+
+                byte[] bytes2 = Convert.FromBase64String(syncResponse.T2);
+                syncResponse.T2 = BitConverter.ToInt64(bytes2, 0).ToString();
                 break;
             case "TicksBinaryBigEndian":
+                byte[] bytesbe = Convert.FromBase64String(syncResponse.T1);
+                Array.Reverse(bytesbe); 
+                syncResponse.T1 = BitConverter.ToInt64(bytesbe, 0).ToString();
+
+                byte[] bytesbe2 = Convert.FromBase64String(syncResponse.T2);
+                Array.Reverse(bytesbe2); 
+                syncResponse.T2 = BitConverter.ToInt64(bytesbe2, 0).ToString();
                 break;
             case "Iso8601":
                 DateTime dateTime = DateTime.Parse(syncResponse.T1);
-                syncResponse.T1 = dateTime.Ticks.ToString();
+                syncResponse.T1 = (dateTime.Ticks + 108000000000).ToString();
+
                 DateTime dateTime2 = DateTime.Parse(syncResponse.T2);
-                syncResponse.T2 = dateTime2.Ticks.ToString();
-                break;
+                syncResponse.T2 = (dateTime2.Ticks + 108000000000).ToString();
+                break;          
         }
     }
 }

@@ -25,15 +25,8 @@ class Program
                 {
                     foreach (Probe probe in probesResponse.Probes)
                     {
-                        long T0 = DateTime.UtcNow.Ticks;
-                        Response syncResponse = await probe.SyncProbe(accessToken);
-                        long T3 = DateTime.UtcNow.Ticks;
-
-                        Console.WriteLine(T0);
-                        Console.WriteLine(syncResponse.T1);
-                        Console.WriteLine(syncResponse.T2);
-                        Console.WriteLine(T3);
-                        Console.WriteLine("");
+                        SyncValues syncValues = await probe.SyncProbe(accessToken);
+                        Console.WriteLine("Probe synched");
                     }
                 }
                 else
