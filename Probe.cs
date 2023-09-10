@@ -7,8 +7,8 @@ class Probe
     public string? Id { get; set; }
     public string? Name { get; set; }
     public string? Encoding { get; set; }
-
-    public async Task<SyncValues> SyncProbe(string accessToken)
+    public SyncValues? SyncValues { get; set; }
+    public async Task SyncProbe(string accessToken)
     {
         using HttpClient httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {accessToken}");
@@ -36,14 +36,12 @@ class Probe
             timeOffset += newTimeOffset;
             roundTrip = t3 - t0 - (t2 - t1); 
 
-            Console.WriteLine($"timeOffset:{newTimeOffset}");
-            Console.WriteLine($"roundTrip:{roundTrip}");
         }
         while(newTimeOffset >= 50000 || newTimeOffset <= -50000);
 
-        SyncValues syncValues = new SyncValues(t0.ToString(),roundTrip);
+        SyncValues syncValues = new SyncValues(timeOffset,roundTrip);
 
-        return syncValues;
+        SyncValues = syncValues;
     }
 
     private void Decode(Response syncResponse){

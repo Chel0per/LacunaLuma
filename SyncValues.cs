@@ -2,12 +2,12 @@ namespace Lacuna
 {
 class SyncValues
 {
-    public string? ProbeNow { get; set; }
-    public long? RoundTrip { get; set; }
+    public long Offset { get; set; }
+    public long RoundTrip { get; set; }
 
-    public SyncValues(string probeNow,long roundTrip)
+    public SyncValues(long offset,long roundTrip)
     {
-        ProbeNow = probeNow;
+        Offset = offset;
         RoundTrip = roundTrip;
     }
 
